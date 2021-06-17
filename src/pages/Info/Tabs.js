@@ -32,7 +32,6 @@ const styles = makeStyles( (theme) => ({
         margin: theme.spacing(1),
         color: color.lightBlue,
         width: '100%'
-        // backgroundColor: color.secondary
     }
 }))
 export const Tabs = ({ ep, trailer, loading }) => {
