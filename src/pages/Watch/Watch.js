@@ -8,6 +8,7 @@ import screenfull from 'screenfull'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import { findDOMNode } from 'react-dom'
 
 
 const styles = makeStyles( (theme) => ({
@@ -105,6 +106,17 @@ export default function Watch() {
                         style={{ transform: 'rotate(90deg)', marginLeft: 5 }} 
                     />
                 </Button>
+
+                <Button  
+                    size="small"
+                    className={classes.playBtn} 
+                    onClick={ () => {
+                        let v = document.querySelector("video")
+                        screenfull.request(v)
+                    }}
+                >
+                    F
+                </Button>
             </div>
 
             <div className={classes.videoWrapper} id="video" >
@@ -117,7 +129,7 @@ export default function Watch() {
                     playing={play}
                     onPlay={handlePlay}
                     onStart={ () => {
-                        screenfull.request(ref.current.getInternalPlayer())
+                        screenfull.request(findDOMNode(ref.current.getInternalPlayer()))
                     }}
                     onEnded={handleEnded}
                     onPause={handlePause}

@@ -21,19 +21,19 @@ const styles = makeStyles( (theme) => ({
     },
     ep: {
         display: 'flex',
-        flexGrow: 1,
         flexWrap: 'wrap',
         // display: 'grid',
         // gridTemplateColumns: 'auto auto auto auto auto',
         // gridGap: theme.spacing(1),
-        justifyContent: 'space-evenly',
-        width: '100%'
+        // justifyContent: 'space-evenly',
+        width: '100%',
+        // maxWidth: 'calc(2.5ch * 5)'
         
     },
     btn: {
         margin: theme.spacing(1),
         color: color.lightBlue,
-        width: '100%'
+        width: 'calc(4.5ch * 4)'
     }
 }))
 export const Tabs = ({ ep, trailer, loading }) => {

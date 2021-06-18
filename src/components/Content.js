@@ -6,6 +6,7 @@ import Latest from '../pages/Latest/Latest'
 import Popular from '../pages/Popular/Popular'
 import Info from '../pages/Info/Info'
 import Watch from '../pages/Watch/Watch'
+import Search from '../pages/Search/Search'
 
 const styles = makeStyles( (theme) => ({
     root: {
@@ -29,6 +30,7 @@ export default function Content() {
                 <Route path="/popular" component={Popular} />
                 <Route path="/info/:id" component={Info} />
                 <Route path="/watching/:id/episode/:number" component={Watch} />
+                <Route path="/search/:query" component={Search} />
             </Switch>
         </div>
     )

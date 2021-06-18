@@ -78,7 +78,7 @@ export default function Info() {
         return loading ? "Loading..." : (
             <div style={{ position: 'relative' }} >
                 <div style={{
-                        background: `rgba(0,0,0,.7) url(${result.img})`,
+                        background: `rgba(0,0,0,.8) url(${result.img})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',

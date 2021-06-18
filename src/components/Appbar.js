@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppBar, Button, IconButton, makeStyles, TextField, Toolbar, Typography } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { color } from '../utils/color'
+import { useHistory } from 'react-router-dom';
 
 const styles = makeStyles( (theme) => ({
     appbar: {
@@ -40,6 +41,17 @@ const styles = makeStyles( (theme) => ({
 
 export const Appbar = () => {
     const classes = styles()
+    const [ query, setQuery ] = useState('')
+
+    const history = useHistory()
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        if (query.trim() !== '') {
+            history.push(`/search/${query}`)
+            // console.log(history)
+        }
+    }
 
     return (
         <AppBar position="static" className={classes.appbar} >
@@ -54,12 +66,14 @@ export const Appbar = () => {
                     Senhai-Drama
                 </Typography>
 
-                <form style={{ display: 'flex' }} >
+                <form onSubmit={handleSearch} style={{ display: 'flex' }} >
                     <TextField 
                         className={classes.search}
                         placeholder="Search drama title..."
                         variant="outlined"
                         size="small"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
                         inputProps={{ 
                             style: { 
                                 paddingTop: 10, 
@@ -70,7 +84,7 @@ export const Appbar = () => {
                             } 
                         }}
                     />
-                    <Button className={classes.searchBtn} variant="contained" size="medium" >
+                    <Button type="submit" className={classes.searchBtn} variant="contained" size="medium" >
                         <SearchIcon />
                     </Button>
                 </form>

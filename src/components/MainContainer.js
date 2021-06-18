@@ -15,16 +15,15 @@ export default function MainContainer() {
     const classes = styles()
     return (
         <Container maxWidth="xl" >
-            <Appbar />
-            
-            <div className={classes.section} >
-                <Router>
-                    <Sidenav />
-                    <Divider orientation="vertical" />
-                    <Content />
-                </Router>
-            </div>
-
+            <Router>
+                <Appbar />
+                
+                <div className={classes.section} >
+                        <Sidenav />
+                        <Divider orientation="vertical" />
+                        <Content />
+                </div>
+            </Router>
         </Container>
     )
 }
