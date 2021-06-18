@@ -76,6 +76,8 @@ export default function Watch() {
 
     if(error) return <h1>Error</h1>
 
+    console.log( ref.current !== null && ref.current.getInternalPlayer())
+
     return loading ? <Typography className={classes.watching} variant="h5" >Now Loading...</Typography> : (
         <div className={classes.root} >
             <div>

@@ -19,7 +19,7 @@ const theme = createMuiTheme({
       },
   },
   typography: {
-      fontFamily: 'Lexend Deca'
+      fontFamily: 'Lexend Deca, Single Day, cursive'
   },
 })
 

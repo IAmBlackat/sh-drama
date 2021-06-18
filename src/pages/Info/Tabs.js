@@ -10,7 +10,8 @@ const styles = makeStyles( (theme) => ({
         backdropFilter: 'blur(10px)',
         background: 'rgba(255,255,255,0.1)',
         marginTop: theme.spacing(2),
-        borderRadius: 10
+        borderRadius: 10,
+        width: '100%'
     },
     video: {
         width: '70%',
@@ -19,13 +20,14 @@ const styles = makeStyles( (theme) => ({
         margin: 'auto'
     },
     ep: {
-        // display: 'flex',
+        display: 'flex',
         flexGrow: 1,
-        // flexWrap: 'wrap',
-        display: 'grid',
-        gridTemplateColumns: 'auto auto auto auto auto',
-        gridGap: theme.spacing(1),
+        flexWrap: 'wrap',
+        // display: 'grid',
+        // gridTemplateColumns: 'auto auto auto auto auto',
+        // gridGap: theme.spacing(1),
         justifyContent: 'space-evenly',
+        width: '100%'
         
     },
     btn: {

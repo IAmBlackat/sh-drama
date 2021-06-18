@@ -12,8 +12,8 @@ const styles = makeStyles( (theme) => ({
     },
     cardWrapper: {
         position: 'relative', 
-        width: 120, 
-        height: 180,
+        width: 180, 
+        height: 250,
         borderRadius: 10,
         overflow: 'hidden',
         boxShadow: '2px 2px 10px 7px rgba(255,255,255,0.2)',
@@ -71,7 +71,7 @@ export default function Popular() {
                 Popular
             </Typography>
 
-            <GridList cellHeight="auto" spacing={3} cols={10} >
+            <GridList cellHeight="auto" spacing={3} cols={7} >
                 {result.map( (i,index) => (
                     <GridListTile key={index} >
                         <Card d={i} />

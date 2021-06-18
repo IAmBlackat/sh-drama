@@ -83,7 +83,7 @@ export default function Latest() {
                 Latest Updates
             </Typography>
 
-            <GridList cellHeight="auto" spacing={3} cols={5} >
+            <GridList cellHeight="auto" spacing={3} cols={7} >
                 {result.map( (i,index) => (
                     <GridListTile key={index}  >
                         <Card d={i} />
