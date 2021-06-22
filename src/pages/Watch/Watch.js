@@ -16,8 +16,8 @@ import {
     DurationDisplay,
     
 } from 'video-react';
-import '../../../node_modules/video-react/dist/video-react.css'
 import './video-react.css'
+import '../../../node_modules/video-react/dist/video-react.css'
 import { useDispatch } from 'react-redux'
 import { saveToHistory } from '../../redux/history/action'
 const Episode = lazy( () => import('./Episode'))
