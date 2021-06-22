@@ -55,7 +55,7 @@ const Episode = ({ episode, title, history }) => {
                             variant="text" 
                             startIcon={ i.epName.trim() === title.trim() && <PlayArrowIcon />}
                             onClick={ () => {
-                                history.push(`/watching/${i.id}/episode/${i.episode}`)
+                                history.push(`/watching/${i.id}/episode/${i.episode}/0`)
                             }}
                         >
                             {i.epName}

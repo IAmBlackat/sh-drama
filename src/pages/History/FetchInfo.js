@@ -17,8 +17,8 @@ const styles = makeStyles( (theme) => ({
     },
     cardWrapper: {
         position: 'relative', 
-        width: 180, 
-        height: 250,
+        width: 160, 
+        height: 230,
         borderRadius: 10,
         overflow: 'hidden',
         boxShadow: '2px 2px 10px 7px rgba(255,255,255,0.2)',

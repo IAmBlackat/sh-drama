@@ -59,7 +59,6 @@ export default function Latest() {
     const handleClick = (d) => {
         history.push(`/watching/${d.id}/episode/${d.ep}`)
     }
-    console.log(3%1)
     const Card = ({ d }) => {
         return (
             <div className={classes.cardWrapper} onClick={ () => handleClick(d)} >

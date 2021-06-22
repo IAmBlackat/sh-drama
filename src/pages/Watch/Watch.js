@@ -20,6 +20,7 @@ import './video-react.css'
 import '../../../node_modules/video-react/dist/video-react.css'
 import { useDispatch } from 'react-redux'
 import { saveToHistory } from '../../redux/history/action'
+import screenfull from 'screenfull'
 const Episode = lazy( () => import('./Episode'))
 
 const styles = makeStyles( (theme) => ({
@@ -115,7 +116,9 @@ export default function Watch() {
 
     const handlePlay = () => {
         setPlay(true)
-        !ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
+        const el = document.querySelector("#video")
+        screenfull.request(el)
+        // !ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
     }
     const handlePause = () => {
         setPlay(false)
