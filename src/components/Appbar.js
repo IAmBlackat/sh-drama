@@ -4,6 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { color } from '../utils/color'
 import { useHistory } from 'react-router-dom';
+// import logo from '../asset/logo.png'
 
 const styles = makeStyles( (theme) => ({
     appbar: {
@@ -20,7 +21,20 @@ const styles = makeStyles( (theme) => ({
         }
     },
     title: {
-        marginRight: theme.spacing(3)
+        marginRight: theme.spacing(3),
+        // paddingRight: theme.spacing(2.6),
+        cursor: 'pointer',
+        position: 'relative',
+        zIndex: 99,
+    },
+    logo: {
+        position: 'absolute',
+        top: 2,
+        right: 2,
+        width: 20,
+        height: 20,
+        zIndex: 100,
+        transform: 'rotate(35deg)'
     },
     search: {
         borderTopRightRadius: 0,
@@ -30,11 +44,11 @@ const styles = makeStyles( (theme) => ({
         // color: 'white',
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
-        backgroundColor: color.primary,
+        backgroundColor: color.lightBlue,
         "&:hover": {
-            color: 'white',
+            color: color.lightBlue,
             backgroundColor: '#121212',
-            transition: 'all 0.8s'
+            transition: 'all 0.3s'
         }
     }
 }))
@@ -49,7 +63,6 @@ export const Appbar = () => {
         e.preventDefault()
         if (query.trim() !== '') {
             history.push(`/search/${query}`)
-            // console.log(history)
         }
     }
 
@@ -62,8 +75,9 @@ export const Appbar = () => {
                     <MenuIcon />
                 </IconButton>
 
-                <Typography className={classes.title} variant="h6" noWrap >
-                    Senhai-Drama
+                <Typography onClick={()=>history.push('/')} className={classes.title} variant="h6" noWrap >
+                    Ate's K-Drama
+                    {/* <img className={classes.logo} src={logo} alt="" /> */}
                 </Typography>
 
                 <form onSubmit={handleSearch} style={{ display: 'flex' }} >

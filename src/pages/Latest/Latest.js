@@ -12,8 +12,8 @@ const styles = makeStyles( (theme) => ({
     },
     cardWrapper: {
         position: 'relative', 
-        width: 180, 
-        height: 250,
+        width: 150, 
+        height: 200,
         borderRadius: 10,
         overflow: 'hidden',
         boxShadow: '2px 2px 10px 7px rgba(255,255,255,0.2)',
@@ -52,14 +52,14 @@ export default function Latest() {
     const classes = styles()
     const [ page, setPage ] = useState(1)
     const { result, loading, error } = useList('/recent/', page)
-    // console.log(result)
+    console.log(result.length)
     if(error) return <h1>Error</h1>
 
     const history = useHistory()
     const handleClick = (d) => {
         history.push(`/watching/${d.id}/episode/${d.ep}`)
     }
-
+    console.log(3%1)
     const Card = ({ d }) => {
         return (
             <div className={classes.cardWrapper} onClick={ () => handleClick(d)} >
@@ -83,7 +83,7 @@ export default function Latest() {
                 Latest Updates
             </Typography>
 
-            <GridList cellHeight="auto" spacing={3} cols={7} >
+            <GridList cellHeight="auto" spacing={3} cols={6} >
                 {result.map( (i,index) => (
                     <GridListTile key={index}  >
                         <Card d={i} />

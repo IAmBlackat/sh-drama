@@ -2,17 +2,18 @@ import React from 'react'
 import { Button, Card, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core'
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { color } from '../../utils/color'
-
-const img = '//cdn.watchasian.co/cover/frightening-cohabitation.png'
+import { useSelector } from 'react-redux';
+import { useId } from '../../hooks/useAxios';
+import { FormattedTime } from 'react-player-controls'
+import Skeleton from '@material-ui/lab/Skeleton';
+import { useHistory } from 'react-router-dom';
 
 const styles = makeStyles( (theme) => ({
     root: {
+        
+    },
+    bg: {
         // background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%)',
-        background: `rgba(0,0,0,.7) url(${img})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundBlendMode: 'darken',
         borderRadius: 10,
         overflow: 'hidden'
     },
@@ -39,51 +40,78 @@ const styles = makeStyles( (theme) => ({
             color: color.lightBlue,
         },
         marginTop: theme.spacing(5)
+    },
+    subText: {
+        
     }
 }))
 
 export const Continue = () => {
     const classes = styles()
+    const history = useHistory()
+    const recent = useSelector( state => state.history[0] )
+    const { result, loading, error } = useId(recent.mainId)
 
-    return (
+    const Text = ({ title, subtitle }) => {
+        return (
+            <Typography className={classes.subText}>
+                {title}: <span style={{ color: color.lightBlue }} >{subtitle}</span>
+            </Typography>
+        )
+    }
+
+    if(error) return <h1>Error</h1>
+
+    const Loading = () => {
+        return <Skeleton style={{ borderRadius: 10 }} width="100%" height="50%" variant="rect" animation="wave" />
+    }
+
+    return loading ? <Loading /> : (
         <div className={classes.root} >
-            <Card className={classes.card} >
-                <CardMedia 
-                    className={classes.img}
-                    image="https://cdn.videokvid.com/cover/frightening-cohabitation.png" 
-                    title=""
-                />
-                <CardContent style={{ width: '100%', height: '100%' }} >
-                    
-                    <Typography variant="h4" noWrap style={{ width: '90%' }} >
-                        My Roommate is a Gumiho (2021)  
-                    </Typography>
-                    <Typography>
-                        Status: Ongoing
-                    </Typography>
-                    <Typography variant="body1" >
-                        Genres: Cohabitation, Comedy, Fantasy, Gumiho, Romance
-                    </Typography>
-                    <Typography>
-                        Country: Korean
-                    </Typography>
-                    <Typography variant="inherit" style={{ width: '90%' }} >
-                        Date Aired: 2021
-                    </Typography>
-                    <Typography>
-                        Total Episodes: 6
-                    </Typography>
+            <div className={classes.bg} style={{
+                    background: `rgba(0,0,0,.7) url(${result.img})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    backgroundBlendMode: 'darken',
+            }} >
+                <Card className={classes.card} >
+                    <CardMedia 
+                        className={classes.img}
+                        image={result.img} 
+                        title=""
+                    />
+                    <CardContent style={{ width: '100%', height: '100%' }} >
+                        
+                        <Typography 
+                            variant="h4" 
+                            noWrap 
+                            style={{ width: '90%', fontWeight: 'bold', cursor: 'pointer' }} 
+                            onClick={ () => history.push(`/info/${recent.mainId}`)}
+                        >
+                            {result.title}
+                        </Typography>
 
-                    <Button 
-                        className={classes.watch} 
-                        variant="contained" 
-                        startIcon={<PlayArrowIcon />}
-                    >
-                        Continue Watching
-                    </Button>
-                </CardContent>
-                
-            </Card>
+                        <Text title="Status" subtitle={result.status} />
+                        <Text title="Genre" subtitle={result.genre} />
+                        <Text title="Country" subtitle={result.country} />
+                        <Text title="Date Aired" subtitle={result.released} />
+                        <Text title="Episode" subtitle={`${recent.currentEpisode}/${result.lastEp}`} />
+                        <Button 
+                            className={classes.watch} 
+                            variant="contained" 
+                            startIcon={<PlayArrowIcon />}
+                            endIcon={<FormattedTime numSeconds={recent.timeToContinue} style={{ fontSize: '15px' }} />}
+                            onClick={ () => {
+                                history.push(`/watching/${recent.watchId}/episode/${recent.currentEpisode}/${recent.timeToContinue}`)
+                            }}
+                        >
+                            Continue EP{recent.currentEpisode}
+                        </Button>
+                    </CardContent>
+                    
+                </Card>
+            </div>
         </div>
     )
 }

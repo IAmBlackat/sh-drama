@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -28,7 +28,9 @@ const theme = createMuiTheme({
 ReactDOM.render( 
   <ThemeProvider theme={theme} >
     <CssBaseline />
-    <App />
+    <Suspense fallback={<h1>loading</h1>} >
+      <App />
+    </Suspense>
   </ThemeProvider>
 ,document.getElementById('root') );
 

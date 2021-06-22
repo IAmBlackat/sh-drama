@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, makeStyles, Tab, Tabs as  T, Typography } from '@material-ui/core'
+import { Box, Button, makeStyles, Tab, Tabs as  T } from '@material-ui/core'
 import { color } from '../../utils/color'
 import Player from 'react-player'
 import { useHistory } from 'react-router-dom'
@@ -33,10 +33,17 @@ const styles = makeStyles( (theme) => ({
     btn: {
         margin: theme.spacing(1),
         color: color.lightBlue,
-        width: 'calc(4.5ch * 4)'
+        backgroundColor: color.background,
+        width: 'calc(4.5ch * 4)',
+        transition: 'all .3s',
+        '&:hover' : {
+            color: color.background,
+            backgroundColor: color.lightBlue,
+            transition: 'all .3s'
+        }
     }
 }))
-export const Tabs = ({ ep, trailer, loading }) => {
+export const Tabs = ({ ep, trailer, loading, dramaId }) => {
     const classes = styles()
     const [ value, setValue ] = useState(0)
 
@@ -65,7 +72,7 @@ export const Tabs = ({ ep, trailer, loading }) => {
     
     const history = useHistory()
     const handleClick = (d) => {
-        history.push(`/watching/${d.id}/episode/${d.episode}`)
+        history.push(`/watching/${d.id}/episode/${d.episode}/0`)
     }
 
     return loading ? "Loading..." : (
@@ -86,9 +93,9 @@ export const Tabs = ({ ep, trailer, loading }) => {
                 { ep !== undefined && ep.map( (i,index) => (
                     <div key={index}  >
                         { i.sub === 'SUB' ? 
-                            <Button variant="outlined" className={classes.btn} onClick={() => handleClick(i) } >Episode {i.episode} Sub</Button>
+                            <Button variant="contained" className={classes.btn} onClick={() => handleClick(i) } >Episode {i.episode} Sub</Button>
                             : 
-                            <Button variant="outlined" className={classes.btn} onClick={() => handleClick(i) } style={{ color: color.primary }} >Episode {i.episode} Raw </Button>
+                            <Button variant="contained" className={classes.btn} onClick={() => handleClick(i) } style={{ color: color.primary }} >Episode {i.episode} Raw </Button>
                         }
                     </div>
                 )) }

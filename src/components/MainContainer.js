@@ -1,9 +1,9 @@
-import { Container, Divider, makeStyles } from '@material-ui/core'
+import { Container, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { Appbar } from './Appbar'
 import Content from './Content'
 import { Sidenav } from './Sidenav'
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const styles = makeStyles( (theme) => ({
     section: {
@@ -20,7 +20,7 @@ export default function MainContainer() {
                 
                 <div className={classes.section} >
                         <Sidenav />
-                        <Divider orientation="vertical" />
+                        {/* <Divider orientation="vertical" /> */}
                         <Content />
                 </div>
             </Router>

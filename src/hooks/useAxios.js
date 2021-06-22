@@ -6,15 +6,16 @@ import axios from 'axios'
 // v3 => main source
 
 const baseUrl = 'https://senhai-drama-server.vercel.app/api/v3/drama'
+// const baseUrl = `http://localhost:5000/api/v3/drama`
 
-export const useList = (endpoint, page) => {
+export const useList = (endpoint, page, part) => {
     const [ result, setResult ] = useState([])
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
     const v = 'v3'
     // const baseUrl = `http://localhost:5000/api/${v}/drama`
     // const baseUrl = 'https://senhai-drama-server.vercel.app/api/v3/drama'
-    const url = `${baseUrl}${endpoint}${page}`
+    const url = `${baseUrl}${endpoint}${page}/part/${part}`
     // console.log(url)
 
     const catcher = async () => {
@@ -74,7 +75,7 @@ export const useList = (endpoint, page) => {
 
 export const useId = (id) => {
     const [ result, setResult ] = useState([])
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
     const [ error, setError ] = useState(false)
 
     // const v = 'v3'
@@ -90,7 +91,6 @@ export const useId = (id) => {
                 setResult(res.data.results)
                 setLoading(false)
             }
-
         })
         .catch( err => {
             catcher()
@@ -136,39 +136,43 @@ export const useId = (id) => {
 
 export const useWatch = (id, ep) => {
     const [ result, setResult ] = useState([])
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
     const [ error, setError ] = useState(false)
     const [ title, setTitle ] = useState('')
     const [ lastEp, setlastEp ] = useState(null)
+    const [ episode, setEpisode ] = useState([])
+    const [ mainId, setMainId ] = useState('')
 
     // const v = 'v3'
     // const url = `http://localhost:5000/api/${v}/drama/watching/${id}/episode/${ep}`
     const url = `${baseUrl}/watching/${id}/episode/${ep}`
+    
+    const fetchInfo = async () => {
+        await axios.get(url)
+        .then( res => {
+            // console.log(res.data)
+            if(!res.data.success) catcher()
+            if(res.data.success) {
+                setResult(res.data.results)
+                setTitle(res.data.title)
+                setlastEp(res.data.lastEp)
+                setEpisode(res.data.ep)
+                // console.log("maind id", res.data.mainId)
+                setMainId(res.data.mainId)
+                setLoading(false)
+            }
+        })
+        .catch( err => {
+            catcher()
+            // setError(true)
+            console.error(err)
+        } )
+    }
 
     useEffect( () => {
         setLoading(true)
         setError(false)
         let c = axios.CancelToken.source()
-
-        const fetchInfo = async () => {
-            await axios.get(url)
-            .then( res => {
-                // console.log(res.data)
-                if(!res.data.success) catcher()
-                if(res.data.success) {
-                    setResult(res.data.results)
-                    setTitle(res.data.title)
-                    setlastEp(res.data.lastEp)
-                    setLoading(false)
-                }
-    
-            })
-            .catch( err => {
-                catcher()
-                // setError(true)
-                console.error(err)
-            } )
-        }
 
         fetchInfo()
         
@@ -185,11 +189,12 @@ export const useWatch = (id, ep) => {
                 setResult(res.data.results)
                 setTitle(res.data.title)
                 setlastEp(res.data.lastEp)
+                setEpisode(res.data.ep)
+                setMainId(res.data.mainId)
                 setLoading(false)
             } else {
                 setError(true)
             }
-            // !res.data.success && 
         })
         .catch( err => {
             console.error(err)
@@ -198,6 +203,5 @@ export const useWatch = (id, ep) => {
         } )
     }
     
-    return { result, loading, error, title, lastEp }
-
+    return { result, loading, error, title, lastEp, episode, mainId }
 }

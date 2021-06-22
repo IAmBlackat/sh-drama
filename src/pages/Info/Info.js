@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import { Button, Divider, makeStyles, Typography } from '@material-ui/core'
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import React from 'react'
+import { Divider, makeStyles, Typography } from '@material-ui/core'
+// import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { color } from '../../utils/color';
 import { Tabs } from './Tabs'
 import { useId } from '../../hooks/useAxios';
@@ -34,7 +34,8 @@ const styles = makeStyles( (theme) => ({
         backdropFilter: 'blur(20px)', 
         background: 'rgba(255,255,255,0.1)',
         width: 230,
-        height: '100%'
+        height: '100%',
+        borderRadius: 10
     },
     subText: {
         fontSize: '15px',
@@ -78,7 +79,7 @@ export default function Info() {
         return loading ? "Loading..." : (
             <div style={{ position: 'relative' }} >
                 <div style={{
-                        background: `rgba(0,0,0,.8) url(${result.img})`,
+                        background: `rgba(0,0,0,.7) url(${result.img})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',
@@ -86,7 +87,7 @@ export default function Info() {
                         height: '85vh',
                         width: '100%',
                         position: 'absolute',
-                        filter: 'blur(10px)'
+                        filter: 'blur(20px)'
                     }}
                 />
                 <div className={classes.foreground} >
@@ -134,7 +135,7 @@ export default function Info() {
                             </span>
                         </Typography>
     
-                        <Tabs ep={result.ep} trailer={result.trailer} loading={loading} />
+                        <Tabs ep={result.ep} trailer={result.trailer} loading={loading} dramaId={id} />
                     </div>
                 </div>
             </div>

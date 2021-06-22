@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import { Continue } from './Continue'
 import { Carousel } from './Carousel'
 import { StartWatching } from './StartWatching'
+import { useSelector } from 'react-redux'
 
 const styles = makeStyles( (theme) => ({
     root: {
@@ -15,10 +16,10 @@ const styles = makeStyles( (theme) => ({
 
 export default function Home() {
     const classes = styles()
+    const history = useSelector( state => state.history )
     return (
         <div className={classes.root} >
-            <Continue />
-            {/* <StartWatching /> */}
+            { history.length !== 0 ?  <Continue /> : <StartWatching /> }
             <Carousel />
         </div>
     )

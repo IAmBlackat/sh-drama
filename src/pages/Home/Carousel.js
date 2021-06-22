@@ -5,6 +5,8 @@ import Alice from 'react-alice-carousel'
 import NavigationIcon from '@material-ui/icons/Navigation';
 import { useList } from '../../hooks/useAxios';
 import { useHistory } from 'react-router-dom'
+import { color } from '../../utils/color';
+import Loading from '../reusable/Loading';
 
 const res = {
     500: {
@@ -24,7 +26,9 @@ const res = {
 const styles = makeStyles( (theme) => ({
     root: {
         position: 'relative',
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(1),
+        height: '50%'
+        // backgroundColor: '#303030'
     },
     compWrapper: {
         display: 'flex',
@@ -72,7 +76,8 @@ export const Carousel = ({ card }) => {
     const ref = useRef()
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const { result, loading, error } = useList('/popular/', 1)
+    const { result, loading, error } = useList('/popular/', 1, 1)
+    
     if(error) return <h1>Error</h1>
     const syncActiveIndex = ({ item }) => setActiveIndex(item)
 
@@ -90,7 +95,7 @@ export const Carousel = ({ card }) => {
         )
     }
 
-    return loading ? "Loading" : (
+    return loading ? <Loading /> : (
         <div className={classes.root} >
             <div className={classes.compWrapper}>
                 <Typography variant="h5" className={classes.compTitle} noWrap >
@@ -98,15 +103,15 @@ export const Carousel = ({ card }) => {
                 </Typography>
                 <div style={{ display: 'flex', alignItems: 'center' }} >
                     <IconButton onClick={() => ref.current.slidePrev()}>
-                        <NavigationIcon style={{ transform: 'rotate(270deg)' }} />
+                        <NavigationIcon style={{ transform: 'rotate(270deg)', color: color.lightBlue }} />
                     </IconButton>
 
-                    <Typography style={{ pointerEvents: 'none' }} >
+                    <Typography style={{ pointerEvents: 'none', color: color.lightBlue }} >
                         page {activeIndex+1}                        
                     </Typography>   
                     
                     <IconButton onClick={() => ref.current.slideNext()}  >
-                        <NavigationIcon style={{ transform: 'rotate(90deg)' }} />
+                        <NavigationIcon style={{ transform: 'rotate(90deg)', color: color.lightBlue }} />
                     </IconButton>
                 </div>
 
