@@ -132,7 +132,9 @@ export default function Watch() {
         }))
     }
     const handleEnded = () => {
-        ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
+        // ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
+        const el = document.querySelector("#video")
+        screenfull.exit(el)
         Number(ep) >= Number(lastEp) ? setPlay(false) : history.push(`/watching/${id}/episode/${Number(ep)+1}/0`)
     }
 
