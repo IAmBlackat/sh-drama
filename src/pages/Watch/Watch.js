@@ -54,7 +54,7 @@ const styles = makeStyles( (theme) => ({
         width: '100%', 
         borderRadius: 8,
         marginTop: theme.spacing(2),
-        // backgroundColor: '#303030',
+        backgroundColor: '#303030',
         borderRadius: 10,
         outline: 'none',
         userSelect: 'none',
@@ -97,28 +97,19 @@ export default function Watch() {
     const path = useLocation().pathname
     const id = path.split('/')[2]
     const ep = path.split('/')[4]
-    const seekTime = path.split('/')[5]
-    // const loading = false
+    const seekTime = path.split('/')[5] 
+
     const { result, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
-
-    // useEffect( ()=> {
-    //     if( hasContinue.id === id ) {
-    //         // user has history on this drama
-    //         if(ep < hasContinue.lastEp) {
-
-    //         } else {
-
-    //         }
-    //     }
-    // }, [])
 
     const [ play, setPlay ] = useState(false)
 
     const handlePlay = () => {
         setPlay(true)
         const el = document.querySelector("#video")
+        // console.log(el)
         screenfull.request(el)
-        // !ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
+        // ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
+        // ref.current.actions.handlePause()
     }
     const handlePause = () => {
         setPlay(false)
@@ -145,18 +136,26 @@ export default function Watch() {
                 { loading ? <Typography className={classes.watching} style={{ width: '60%' }} variant="h5" >Now Loading...</Typography> :  <div className={classes.wrapper} >
                     <div>
                         <Typography className={classes.watching} variant="h5" >Now Watching...</Typography>
-                        <Typography className={classes.title} variant="h5" >
-                            {title} 
-                        </Typography>
+                  
                     </div>
-
+                        {/* {console.log(ref.current)} */}
                     <div id="video" className={classes.videoWrapper} onClick={ () => console.log("click")} >
                         <Player 
-                            ref={ref} 
+                            ref={(player) => ref.current = player } 
                             src={ result.length !== 0 ? result[0].link : null }
                             // src="https://storage.googleapis.com/eco-silicon-315313/AYPM5W9J5C4H/22a_1623990806163515.mp4" 
-                            // onLoadStart={ () => ref.current.seek(seekTime)}
+                            onLoadStart={ () => {
+                                ref.current.seek(seekTime)
+                                console.log(ref.current)
+                            }}
+                            // onLoadedData={() => ref.current.actions.play()}
+                            // onReady={ () =>ref.current.actions.play()}
+                            // onCanPlay={ () => ref.current.video.toggleFullscreen()}
+                            // onCanPlay={(e) => console.log(':Asdfasfdf')}
                             playsInline 
+                            autoPlay={true}
+                            onPlaying={()=>ref.current.video.toggleFullscreen()}
+                            fullscreen={()=>console.log("adfsdf")}
                             onPlay={handlePlay}
                             onPause={handlePause}
                             onEnded={handleEnded}
@@ -177,6 +176,10 @@ export default function Watch() {
                         </Player>
             
                     </div>  
+
+                    <Typography className={classes.title} variant="h5" >
+                        {title} 
+                    </Typography>
                 </div>}
 
                 <div className={classes.episodeList} >

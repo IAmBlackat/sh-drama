@@ -17,7 +17,7 @@ const styles = makeStyles( (theme) => ({
 export default function History() {
     const classes = styles()
     const history = useSelector( state => state.history)
-    // console.log(history)
+    console.log(history)
 
     const List = () => {
         return (

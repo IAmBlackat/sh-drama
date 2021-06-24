@@ -35,7 +35,8 @@ const styles = makeStyles( (theme) => ({
         alignItems: 'center',
     },
     compTitle: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        cursor: 'pointer'
     },
     compNav: {
 
@@ -98,7 +99,7 @@ export const Carousel = ({ card }) => {
     return loading ? <Loading /> : (
         <div className={classes.root} >
             <div className={classes.compWrapper}>
-                <Typography variant="h5" className={classes.compTitle} noWrap >
+                <Typography onClick={()=>history.push('/popular')} variant="h5" className={classes.compTitle} noWrap >
                     Popular K-Drama
                 </Typography>
                 <div style={{ display: 'flex', alignItems: 'center' }} >

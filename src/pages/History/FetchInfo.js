@@ -104,7 +104,8 @@ const FetchInfo = ({ mainId, watchId, episodeTitle, currentEpisode, timeToContin
                 <img 
                     className={loading ? classes.cardImgfade : classes.cardImg} 
                     // src={'https://i.pinimg.com/originals/80/e9/60/80e960d5bc1e14e7f4815c3aae139ad0.gif'} 
-                    src={result.img}
+                    // src={result.img}
+                    src={`https://cdn.videokvid.com/cover/${mainId}.png`}
                     alt="" 
                 />
                 <div className={loading ? classes.cardContentFade : classes.cardContent } >
