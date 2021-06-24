@@ -106,7 +106,6 @@ export default function Watch() {
     const handlePlay = () => {
         setPlay(true)
         const el = document.querySelector("#video")
-        // console.log(el)
         screenfull.request(el)
         // ref.current.getState().player.isFullscreen && ref.current.toggleFullscreen()
         // ref.current.actions.handlePause()
@@ -151,6 +150,8 @@ export default function Watch() {
                             onLoadedData={() => {
                                 ref.current.actions.play()
                                 ref.current.video.toggleFullscreen()
+                                const el = document.querySelector("#video")
+                                screenfull.request(el)
                             }}
                             // onReady={ () =>ref.current.actions.play()}
                             // onCanPlay={ () => ref.current.video.toggleFullscreen()}
