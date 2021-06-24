@@ -148,14 +148,17 @@ export default function Watch() {
                                 ref.current.seek(seekTime)
                                 console.log(ref.current)
                             }}
-                            onLoadedData={() => ref.current.actions.play()}
+                            onLoadedData={() => {
+                                ref.current.actions.play()
+                                ref.current.video.toggleFullscreen()
+                            }}
                             // onReady={ () =>ref.current.actions.play()}
                             // onCanPlay={ () => ref.current.video.toggleFullscreen()}
                             // onCanPlay={(e) => console.log(':Asdfasfdf')}
                             playsInline 
                             // autoPlay={true}
-                            onPlaying={()=>ref.current.video.toggleFullscreen()}
-                            fullscreen={()=>console.log("adfsdf")}
+                            // onPlaying={()=>ref.current.video.toggleFullscreen()}
+                            // fullscreen={()=>console.log("adfsdf")}
                             onPlay={handlePlay}
                             onPause={handlePause}
                             onEnded={handleEnded}
