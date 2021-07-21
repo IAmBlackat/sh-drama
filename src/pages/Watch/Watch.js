@@ -141,7 +141,7 @@ export default function Watch() {
                     <div id="video" className={classes.videoWrapper} onClick={ () => console.log("click")} >
                         <Player 
                             ref={(player) => ref.current = player } 
-                            src={ result.length !== 0 ? result[0].link : null }
+                            src={ result.length !== 0 ? result[0] : null }
                             // src="https://storage.googleapis.com/eco-silicon-315313/AYPM5W9J5C4H/22a_1623990806163515.mp4" 
                             onLoadStart={ () => {
                                 ref.current.seek(seekTime)
