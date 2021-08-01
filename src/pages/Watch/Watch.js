@@ -14,7 +14,7 @@ import {
     BigPlayButton,
     FullscreenToggle,
     DurationDisplay,
-    
+    ClosedCaptionButton
 } from 'video-react';
 import './video-react.css'
 import '../../../node_modules/video-react/dist/video-react.css'
