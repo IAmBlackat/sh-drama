@@ -1,4 +1,4 @@
-import React, { useRef, useState, lazy } from 'react'
+import React, { useRef, useState, lazy, useEffect } from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
 import { color } from '../../utils/color'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -21,6 +21,7 @@ import '../../../node_modules/video-react/dist/video-react.css'
 import { useDispatch } from 'react-redux'
 import { saveToHistory } from '../../redux/history/action'
 import screenfull from 'screenfull'
+import axios from 'axios'
 const Episode = lazy( () => import('./Episode'))
 
 const styles = makeStyles( (theme) => ({
@@ -91,6 +92,7 @@ const styles = makeStyles( (theme) => ({
 export default function Watch() {
     const classes = styles()
     const ref = useRef(null)
+    const [ sub, setSub ] = useState('')
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -100,6 +102,17 @@ export default function Watch() {
     const seekTime = path.split('/')[5] 
 
     const { result, subtitle, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
+
+    useEffect( () => {
+        // let url = id.replace(/-20\d\d/gm,"")
+        axios.post('https://senhai-drama-server.vercel.app/download', {
+            subtitle: subtitle
+        })
+        .then( res => {
+            setSub(res)
+        } )
+        .catch( err => console.log(err) )
+    }, [result])
 
     const [ play, setPlay ] = useState(false)
 
@@ -130,7 +143,7 @@ export default function Watch() {
 
     if(error) return <h1>Error</h1>
 
-    const track = <track kind="captions" srcLang="en-US" label="English" default src={subtitle} />
+    const track = <track kind="captions" srcLang="en-US" label="English" default src={sub} />
 
     return (
         <div className={classes.root} >
@@ -152,7 +165,7 @@ export default function Watch() {
                             }}
                             onLoadedData={() => {
                                 ref.current.addTextTrack({
-                                    src: subtitle,
+                                    src: sub,
                                     kind: 'captions',
                                     srclang: 'en',
                                     label: 'English',
@@ -177,7 +190,7 @@ export default function Watch() {
                             aspectRatio="auto"
                             children={track}
                         >
-                            <track label="English" kind="captions" srcLang="en" src={subtitle} default />
+                            <track label="English" kind="captions" srcLang="en" src={sub} default />
                             <BigPlayButton position="center" />
                             <ControlBar >
                                 <FullscreenToggle order={2} />
