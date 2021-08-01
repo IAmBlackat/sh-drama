@@ -110,7 +110,7 @@ export default function Watch() {
             setSub(res)
         } )
         .catch( err => console.log(err) )
-    }, [result])
+    }, [])
 
     const [ play, setPlay ] = useState(false)
 
