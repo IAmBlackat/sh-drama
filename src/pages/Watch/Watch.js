@@ -129,6 +129,9 @@ export default function Watch() {
     }
 
     if(error) return <h1>Error</h1>
+
+    const track = <track kind="captions" srcLang="en-US" label="English" default src={subtitle} />
+
     return (
         <div className={classes.root} >
             <div className={classes.container} >
@@ -150,9 +153,10 @@ export default function Watch() {
                             onLoadedData={() => {
                                 ref.current.addTextTrack({
                                     src: subtitle,
-                                    kind: 'subtitles',
+                                    kind: 'captions',
                                     srclang: 'en',
-                                    label: 'English'
+                                    label: 'English',
+                                    mode: 'showing'
                                 })
                                 ref.current.actions.play()
                                 ref.current.video.toggleFullscreen()
@@ -171,7 +175,7 @@ export default function Watch() {
                             onEnded={handleEnded}
                             startTime={Number(seekTime)}
                             aspectRatio="auto"
-
+                            children={track}
                         >
                             <track label="English" kind="captions" srcLang="en" src={subtitle} default />
                             <BigPlayButton position="center" />
