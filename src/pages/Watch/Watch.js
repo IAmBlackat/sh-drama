@@ -148,6 +148,12 @@ export default function Watch() {
                                 console.log(ref.current)
                             }}
                             onLoadedData={() => {
+                                ref.current.addTextTrack({
+                                    src: subtitle,
+                                    kind: 'subtitles',
+                                    srclang: 'en',
+                                    label: 'English'
+                                })
                                 ref.current.actions.play()
                                 ref.current.video.toggleFullscreen()
                                 const el = document.querySelector("#video")
