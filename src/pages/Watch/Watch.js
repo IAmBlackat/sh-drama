@@ -99,7 +99,7 @@ export default function Watch() {
     const ep = path.split('/')[4]
     const seekTime = path.split('/')[5] 
 
-    const { result, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
+    const { result, subtitle, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
 
     const [ play, setPlay ] = useState(false)
 
@@ -141,8 +141,8 @@ export default function Watch() {
                     <div id="video" className={classes.videoWrapper} onClick={ () => console.log("click")} >
                         <Player 
                             ref={(player) => ref.current = player } 
-                            src={ result.length !== 0 ? result[0] : null }
-                            // src="https://storage.googleapis.com/eco-silicon-315313/AYPM5W9J5C4H/22a_1623990806163515.mp4" 
+                            // src={ result.length !== 0 ? result[0] : null }
+                            src="https://scontent.frix7-1.fna.fbcdn.net/v/t66.36240-6/10000000_1166862953826144_3648391539002045676_n.mp4?_nc_cat=110&ccb=1-3&_nc_sid=985c63&efg=eyJybHIiOjE1MDAsInJsYSI6NDA5NiwidmVuY29kZV90YWciOiJvZXBfaGQifQ%3D%3D&_nc_ohc=lC4I3scQBQAAX-scuke&rl=1500&vabr=194&_nc_ht=scontent.frix7-1.fna&oh=feb1f55583711f25d826d7b2e857ae19&oe=6109915C" 
                             onLoadStart={ () => {
                                 ref.current.seek(seekTime)
                                 console.log(ref.current)
@@ -167,6 +167,7 @@ export default function Watch() {
                             aspectRatio="auto"
 
                         >
+                            <track label="English" kind="captions" srcLang="en" src={subtitle} default />
                             <BigPlayButton position="center" />
                             <ControlBar >
                                 <FullscreenToggle order={2} />

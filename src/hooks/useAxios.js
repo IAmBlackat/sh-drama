@@ -136,6 +136,7 @@ export const useId = (id) => {
 
 export const useWatch = (id, ep) => {
     const [ result, setResult ] = useState([])
+    const [ subtitle, setSubtitle ] = useState('')
     const [ loading, setLoading ] = useState(true)
     const [ error, setError ] = useState(false)
     const [ title, setTitle ] = useState('')
@@ -157,6 +158,7 @@ export const useWatch = (id, ep) => {
                 setTitle(res.data.title)
                 setlastEp(res.data.lastEp)
                 setEpisode(res.data.ep)
+                setSubtitle(res.data.subtitle)
                 // console.log("maind id", res.data.mainId)
                 setMainId(res.data.mainId)
                 setLoading(false)
@@ -187,6 +189,7 @@ export const useWatch = (id, ep) => {
             // console.log(res.data)
             if(res.data.success) {
                 setResult(res.data.results)
+                setSubtitle(res.data.subtitle)
                 setTitle(res.data.title)
                 setlastEp(res.data.lastEp)
                 setEpisode(res.data.ep)
@@ -203,5 +206,5 @@ export const useWatch = (id, ep) => {
         } )
     }
     
-    return { result, loading, error, title, lastEp, episode, mainId }
+    return { result, subtitle, loading, error, title, lastEp, episode, mainId }
 }
