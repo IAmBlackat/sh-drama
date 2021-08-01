@@ -104,10 +104,8 @@ export default function Watch() {
     const { result, subtitle, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
 
     useEffect( () => {
-        // let url = id.replace(/-20\d\d/gm,"")
-        axios.post('https://senhai-drama-server.vercel.app/download', {
-            subtitle: subtitle
-        })
+        let title = id.replace(/-20\d\d/gm,"")
+        axios.get(`https://senhai-drama-server.vercel.app/download/${title}/${ep}`)
         .then( res => {
             setSub(res)
         } )
