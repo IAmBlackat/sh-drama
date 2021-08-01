@@ -181,8 +181,9 @@ export default function Watch() {
                             <BigPlayButton position="center" />
                             <ControlBar >
                                 <FullscreenToggle order={2} />
-                                <ReplayControl seconds={10} order={3.1} />
-                                <ForwardControl seconds={10} order={3.2} />
+                                <ClosedCaptionButton order={3} />
+                                <ReplayControl seconds={10} order={4.1} />
+                                <ForwardControl seconds={10} order={4.2} />
                                 <VolumeMenuButton disabled />  
                                 <CurrentTimeDisplay order={8} />
                                 <TimeDivider order={8.5} style={{ fontStyle: 'Lexend Deca' }} />
