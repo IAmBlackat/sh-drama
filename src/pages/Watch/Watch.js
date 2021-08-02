@@ -121,7 +121,7 @@ export default function Watch() {
             setLoad(false)
         })
         .catch( e => console.error(e))
-    }, [])
+    }, [ep])
 
     const [ play, setPlay ] = useState(false)
 
