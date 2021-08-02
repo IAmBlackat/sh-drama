@@ -3,6 +3,7 @@ import { makeStyles, Typography } from '@material-ui/core'
 import { color } from '../../utils/color'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useWatch } from '../../hooks/useAxios'
+import ReactPlayer from 'react-player'
 import { 
     Player,
     ControlBar,
@@ -16,6 +17,7 @@ import {
     DurationDisplay,
     ClosedCaptionButton
 } from 'video-react';
+import Hls from './Hls'
 import './video-react.css'
 import '../../../node_modules/video-react/dist/video-react.css'
 import { useDispatch } from 'react-redux'
@@ -92,7 +94,8 @@ const styles = makeStyles( (theme) => ({
 export default function Watch() {
     const classes = styles()
     const ref = useRef(null)
-    const [ sub, setSub ] = useState('')
+    const [ load, setLoad ] = useState(true)
+    const [ alt, setAlt ] = useState('')
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -104,12 +107,17 @@ export default function Watch() {
     const { result, subtitle, loading, error, title, lastEp, episode, mainId } = useWatch(id, ep)
 
     useEffect( () => {
-        let title = id.replace(/-20\d\d/gm,"")
-        axios.get(`https://senhai-drama-server.vercel.app/download/${title}/${ep}`)
+        // let title = id.replace(/-20\d\d/gm,"")
+        setLoad(true)
+        axios.post("https://senhai-drama-server.vercel.app/ai/api/v1/drama/kdramawatch", {
+            epID: `${id}-episode-${ep}`
+        })
         .then( res => {
-            setSub(res)
-        } )
-        .catch( err => console.log(err) )
+            setAlt(res.data.results[0].split("'")[1])
+            // console.log(res.data.results[0].split("'")[1].toString())
+            setLoad(false)
+        })
+        .catch( e => console.error(e))
     }, [])
 
     const [ play, setPlay ] = useState(false)
@@ -141,9 +149,9 @@ export default function Watch() {
 
     if(error) return <h1>Error</h1>
 
-    const track = <track kind="captions" srcLang="en-US" label="English" default src={sub} />
+    // const track = <track kind="captions" srcLang="en-US" label="English" default src={sub} />
 
-    return (
+    return load ? <h1>Loading...</h1> : (
         <div className={classes.root} >
             <div className={classes.container} >
                 { loading ? <Typography className={classes.watching} style={{ width: '60%' }} variant="h5" >Now Loading...</Typography> :  <div className={classes.wrapper} >
@@ -153,27 +161,34 @@ export default function Watch() {
                     </div>
                         {/* {console.log(ref.current)} */}
                     <div id="video" className={classes.videoWrapper} onClick={ () => console.log("click")} >
+                        {/* <ReactPlayer 
+                            url={alt}
+                            loop={true}
+                            controls={true}
+                        /> */}
+
                         <Player 
                             ref={(player) => ref.current = player } 
                             // src={ result.length !== 0 ? result[0] : null }
-                            src="https://scontent.frix7-1.fna.fbcdn.net/v/t66.36240-6/10000000_1166862953826144_3648391539002045676_n.mp4?_nc_cat=110&ccb=1-3&_nc_sid=985c63&efg=eyJybHIiOjE1MDAsInJsYSI6NDA5NiwidmVuY29kZV90YWciOiJvZXBfaGQifQ%3D%3D&_nc_ohc=lC4I3scQBQAAX-scuke&rl=1500&vabr=194&_nc_ht=scontent.frix7-1.fna&oh=feb1f55583711f25d826d7b2e857ae19&oe=6109915C" 
+                            // src="https://scontent.frix7-1.fna.fbcdn.net/v/t66.36240-6/10000000_1166862953826144_3648391539002045676_n.mp4?_nc_cat=110&ccb=1-3&_nc_sid=985c63&efg=eyJybHIiOjE1MDAsInJsYSI6NDA5NiwidmVuY29kZV90YWciOiJvZXBfaGQifQ%3D%3D&_nc_ohc=lC4I3scQBQAAX-scuke&rl=1500&vabr=194&_nc_ht=scontent.frix7-1.fna&oh=feb1f55583711f25d826d7b2e857ae19&oe=6109915C" 
+                            // src={alt}
                             onLoadStart={ () => {
                                 ref.current.seek(seekTime)
                                 console.log(ref.current)
                             }}
-                            onLoadedData={() => {
-                                ref.current.addTextTrack({
-                                    src: sub,
-                                    kind: 'captions',
-                                    srclang: 'en',
-                                    label: 'English',
-                                    mode: 'showing'
-                                })
-                                ref.current.actions.play()
-                                ref.current.video.toggleFullscreen()
-                                const el = document.querySelector("#video")
-                                screenfull.request(el)
-                            }}
+                            // onLoadedData={() => {
+                            //     // ref.current.addTextTrack({
+                            //     //     src: sub,
+                            //     //     kind: 'captions',
+                            //     //     srclang: 'en',
+                            //     //     label: 'English',
+                            //     //     mode: 'showing'
+                            //     // })
+                            //     ref.current.actions.play()
+                            //     ref.current.video.toggleFullscreen()
+                            //     const el = document.querySelector("#video")
+                            //     screenfull.request(el)
+                            // }}
                             // onReady={ () =>ref.current.actions.play()}
                             // onCanPlay={ () => ref.current.video.toggleFullscreen()}
                             // onCanPlay={(e) => console.log(':Asdfasfdf')}
@@ -185,10 +200,15 @@ export default function Watch() {
                             onPause={handlePause}
                             onEnded={handleEnded}
                             startTime={Number(seekTime)}
-                            aspectRatio="auto"
-                            children={track}
+                            // aspectRatio="auto"
+                            // children={track}
                         >
-                            <track label="English" kind="captions" srcLang="en" src={sub} default />
+                            {/* <track label="English" kind="captions" srcLang="en" src={sub} default /> */}
+                            <Hls 
+                                isVideoChild 
+                                src={alt} 
+                            />
+                            {/* {console.log(alt)} */}
                             <BigPlayButton position="center" />
                             <ControlBar >
                                 <FullscreenToggle order={2} />

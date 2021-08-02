@@ -1,5 +1,5 @@
 import { Container, makeStyles } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Appbar } from './Appbar'
 import Content from './Content'
 import { Sidenav } from './Sidenav'
@@ -14,6 +14,15 @@ const styles = makeStyles( (theme) => ({
 
 export default function MainContainer() {
     const classes = styles()
+    useEffect( () => {
+        axios.post("https://senhai-drama-server.vercel.app/ai/api/v1/drama/kdramawatch", {
+            epID: "the-devil-judge-2021-episode-1"
+        })
+        .then( res => {
+            console.log(res.data.results[0].split("'")[1])
+        })
+        .catch( e => console.error(e))
+    }, [])
     return (
         <Container maxWidth="xl" >
             <Router>

@@ -4113,6 +4113,11 @@
     "tiny-warning" "^1.0.0"
     "value-equal" "^1.0.1"
 
+"hls.js@^1.0.7":
+  "integrity" "sha512-NsGaksvOuYNyTmu/w239EtYFMadFzIoDkmStc1FDRcrGmvxOfMGKad/hLj4NHoE8H1S+Q8dT7HufMJJ6yiht7g=="
+  "resolved" "https://registry.npmjs.org/hls.js/-/hls.js-1.0.7.tgz"
+  "version" "1.0.7"
+
 "hmac-drbg@^1.0.1":
   "integrity" "sha1-0nRXAQJabHdabFRXk+1QL8DGSaE="
   "resolved" "https://registry.npmjs.org/hmac-drbg/-/hmac-drbg-1.0.1.tgz"
