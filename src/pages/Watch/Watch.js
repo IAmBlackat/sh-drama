@@ -113,7 +113,10 @@ export default function Watch() {
             epID: `${id}-episode-${ep}`
         })
         .then( res => {
-            setAlt(res.data.results[0].split("'")[1])
+            setAlt(res.data.results[0].split("'")[1].replace("m3u8", "1080.m3u8"))
+            // let url = res.data.results[0].split("'")[1]
+
+            // console.log(url.replace("m3u8", "1080.m3u8"))
             // console.log(res.data.results[0].split("'")[1].toString())
             setLoad(false)
         })
